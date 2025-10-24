@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('Sucursales', function (Blueprint $table) {
+            $table->integer('id', true);
+            $table->string('nombre', 120)->unique('nombre');
+            $table->string('direccion')->nullable();
+            $table->decimal('gps_lat', 10, 6)->nullable();
+            $table->decimal('gps_lng', 10, 6)->nullable();
+            $table->string('telefono', 30)->nullable();
+            $table->boolean('activa')->nullable()->default(true);
+
+            $table->index(['gps_lat', 'gps_lng'], 'sucursales_index_0');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('Sucursales');
+    }
+};
