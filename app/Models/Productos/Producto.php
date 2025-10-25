@@ -58,4 +58,13 @@ class Producto extends Model
     {
         return $this->belongsTo(Categoria::class, 'categoria_id');
     }
+
+    /**
+     * Relación: Un producto puede tener muchas presentaciones
+     * (a través de la tabla pivote producto_presentacion)
+     */
+    public function presentaciones()
+    {
+        return $this->hasMany(ProductoPresentacion::class, 'producto_id');
+    }
 }
