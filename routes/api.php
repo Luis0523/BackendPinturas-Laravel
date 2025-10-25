@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\Core\RolController;
 use App\Http\Controllers\Api\Core\SucursalController;
 use App\Http\Controllers\Api\Productos\ProductoController;
 use App\Http\Controllers\Api\Productos\ProductoPresentacionController;
+use App\Http\Controllers\Api\Usuarios\ClienteController;
+use App\Http\Controllers\Api\Usuarios\UsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,3 +89,31 @@ Route::post('/producto-presentacion/batch', [ProductoPresentacionController::cla
 Route::put('/producto-presentacion/{id}', [ProductoPresentacionController::class, 'update']);               // Actualizar
 Route::delete('/producto-presentacion/{id}', [ProductoPresentacionController::class, 'destroy']);           // Desactivar
 Route::patch('/producto-presentacion/{id}/reactivar', [ProductoPresentacionController::class, 'reactivar']); // Reactivar
+
+// ==================== RUTAS USUARIOS ====================
+// Clientes
+Route::get('/clientes', [ClienteController::class, 'index']);                  // Listar todos
+Route::get('/clientes/buscar', [ClienteController::class, 'buscar']);          // Buscar por NIT/email
+Route::get('/clientes/cercanos', [ClienteController::class, 'cercanos']);      // Buscar cercanos por GPS
+Route::get('/clientes/{id}', [ClienteController::class, 'show']);              // Obtener uno
+Route::post('/clientes', [ClienteController::class, 'store']);                 // Crear nuevo
+Route::put('/clientes/{id}', [ClienteController::class, 'update']);            // Actualizar
+Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);        // Eliminar
+Route::patch('/clientes/{id}/verificar', [ClienteController::class, 'verificar']); // Verificar
+
+// Usuarios - Autenticación
+Route::post('/usuarios/login', [UsuarioController::class, 'login']);                   // Login
+Route::post('/usuarios/logout', [UsuarioController::class, 'logout']);                 // Logout
+Route::post('/usuarios/refresh-token', [UsuarioController::class, 'refreshToken']);    // Refresh token
+Route::get('/usuarios/verify-token', [UsuarioController::class, 'verifyToken']);       // Verify token
+Route::post('/usuarios/forgot-password', [UsuarioController::class, 'forgotPassword']); // Forgot password
+Route::post('/usuarios/reset-password', [UsuarioController::class, 'resetPassword']);   // Reset password
+Route::patch('/usuarios/{id}/cambiar-password', [UsuarioController::class, 'cambiarPassword']); // Cambiar password
+
+// Usuarios - Gestión
+Route::get('/usuarios', [UsuarioController::class, 'index']);           // Listar todos
+Route::get('/usuarios/buscar', [UsuarioController::class, 'buscar']);   // Buscar por email/DPI
+Route::get('/usuarios/{id}', [UsuarioController::class, 'show']);       // Obtener uno
+Route::post('/usuarios', [UsuarioController::class, 'store']);          // Crear nuevo
+Route::put('/usuarios/{id}', [UsuarioController::class, 'update']);     // Actualizar
+Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy']); // Desactivar (soft delete)
